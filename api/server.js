@@ -23,10 +23,7 @@ app.get('/api/matriz', (req, res) => {
     let Final = { i: 1, j: 5 };
 
     let MatrizModificada = Estrella.AsignarCostos(Matriz, Inicio, Final);
-    console.log(Estrella.verVecinos(MatrizModificada, Inicio, Final))
-    res.send(MatrizModificada)
-    // console.log(Matriz)
-    // res.send(Estrella.verVecinos(MatrizModificada, Inicio, Final));
+    res.send(Estrella.verVecinos(MatrizModificada, Inicio, Final))
 });
 
 app.get('/', (req, res) => {

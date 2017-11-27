@@ -27,24 +27,33 @@ class App extends Component {
     super(props)
 
     this.state = {
-      mat: [[]]
+      mat: [[]],
+      info: {
+        Matriz: [[]],
+        Expandidos: [],
+        Frontera: [],
+        Acumulador: 0
+    }
     }
   }
 
   componentDidMount() {
     axios.get(`http://localhost:3001/api/matriz`)
-    .then(res => {
-      const mat = res.data;
-      console.log(mat)
-      this.setState({ mat });
-    });
+      .then(res => {
+        const mat = res.data.Matriz;
+        const info =
+          res.data
+          ;
+        console.log(res.data)
+        this.setState({ info });
+      });
 
   }
 
   render() {
     return (
       <div className="App">
-        <Matriz matriz={this.state.mat} />
+        <Matriz info={this.state.info} />
       </div>
     );
   }

@@ -87,7 +87,12 @@ const Algoritmo = (Matriz, inicio, fin) => {
     }
     VerVecinos(inicio.i, inicio.j)
 
-    return Matriz
+    return{
+        Matriz: Matriz,
+        Frontera: Frontera,
+        Expandidos: Expandidos,
+        Acumulador: Acumulador
+    } 
 }
 
 const Ordenar = lista => {
