@@ -1,9 +1,9 @@
 
-exports.AsignarCostos = (Matriz, Final) => {
+exports.AsignarCostos = (Matriz, Inicio, Final) => {
 
     let fin = Final;
     let nuevaMatriz = [[]];
-
+    let id = 1
     Matriz.forEach((element, i) => {
         nuevaMatriz[i] = new Array();
         element.forEach((nuevoElem, j) => {
@@ -13,11 +13,16 @@ exports.AsignarCostos = (Matriz, Final) => {
                 Valor: Matriz[i][j],
                 gn: Matriz[i][j],
                 i: i,
-                j: j
+                j: j,
+                Id: id++
             };
+            nuevoElemento.Costo = nuevoElemento.gn + nuevoElemento.hn
             nuevaMatriz[i][j] = (nuevoElemento);
         }, this);
     }, this);
+
+    nuevaMatriz[Inicio.i][Inicio.j].Inicio = true
+    nuevaMatriz[Final.i][Final.j].Final = true
 
     return nuevaMatriz;
 };
@@ -43,60 +48,76 @@ exports.getCoordenadasObjetivo = (Matriz) => {
     return result;
 };
 
-const Algoritmo = Matriz => {
+const CostoTotal = nodo => nodo ? nodo.gn + nodo.hn : 1000
+
+const Algoritmo = (Matriz, inicio, fin) => {
     let Frontera = new Array()
     let Expandidos = new Array()
     let Chidos = new Array()
     let newMatriz = []
 
-    const CostoTotal = nodo => nodo.gn + nodo.hn
+    let bandera = true
+    let contador = 0
+    let Acumulador = 0
 
     const VerVecinos = (i, j) => {
-        let contador = 0
-        let Acumulador = 0
-        let bandera = true
-        let Aux = {}
 
+        let Aux = []
+        console.log(++contador)
         for (let renglon = (i < 1 ? 1 : i) - 1; renglon < i + 2; renglon++) {
             for (let columna = (j < 1 ? 1 : j) - 1; columna < j + 2; columna++) {
+
                 if (columna == j && renglon == i || columna >= Matriz.length || renglon >= Matriz.length
-                    || !!Matriz[renglon][columna].final
+                    || Matriz[renglon][columna].Inicio || !!Matriz[renglon][columna].Visitado
                 ) continue;
 
-                if (Matriz[renglon][columna].Valor.final) {
-                    return Matriz[renglon][columna];
+                if (Matriz[renglon][columna].Final) {
+                    bandera = false
                 }
 
-            }
-            if (CostoTotal(Matriz[renglon][columna]) < CostoTotal(Aux)) {
-                Aux = Matriz[renglon][columna]
+                Frontera.push(Matriz[renglon][columna])
             }
         }
         Ordenar(Frontera)
+        // console.log(Frontera)
+        let expandido = Frontera.shift()
+        bandera ? expandido.Visitado = true : ""
+        Acumulador += expandido.Costo
+        // console.log(expandido)
+        Expandidos.push(expandido)
 
-        if (Frontera.length > 0 && CostoTotal(Frontera[0]) > Aux) {
-            Frontera.shift(Aux)
-            Aux.Visitado = true
-        }
+        // console.log("***",Frontera, "***")
+        // console.log("++++", Expandidos, "++++")
+        bandera ? VerVecinos(Expandidos[Expandidos.length - 1].i, Expandidos[Expandidos.length - 1].j) : ""
+        // if ((Frontera.length > 0 && CostoTotal(Frontera[0]) > Aux) || Frontera.length === 0) {
+        //     Frontera.shift(Aux)
+        //     Aux.Visitado = true
+        // }
 
-        Expandidos.push(Frontera.unshift(0))
-        VerVecinos(Expandidos[Expandidos.length - 1].i, Expandidos[Expandidos.length - 1].j)
+        // Expandidos.push(Frontera.length > 0 ? Frontera.unshift() : Aux)
+
+        // console.log("****" + Expandidos)
+        // if(Aux.Final)
+        // !Expandidos[Expandidos.length - 1].Final ? VerVecinos(Expandidos[Expandidos.length - 1].i, Expandidos[Expandidos.length - 1].j) : ""
     }
     // Expandidos.push(Frontera.shift());
+    VerVecinos(inicio.i, inicio.j)
+
+    return Matriz
 }
 
 
 const Ordenar = lista => {
     lista.sort((a, b) => {
-        if (CostoTotal(a) > CostoTotal(b)) {
+        if (a.Costo > b.Costo) {
             return 1;
         }
-        if (CostoTotal(a) < CostoTotal(b)) {
+        if (a.Costo < b.Costo) {
             return -1;
         }
         // a must be equal to b
         return 0;
-    });
+    })
 }
 
 

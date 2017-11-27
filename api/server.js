@@ -1,37 +1,39 @@
 const Estrella = require('./aEstrella.js')
-
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser')
 const path = require('path');
+const cors = require('cors')
 
 bodyParser.json();
 
-
-let Matriz = [
-    [2, 2, 2, 2, 2, 2],
-    [2, 2, 2, 2, -1, 2],
-    [2, 2, 2, 2, 2, 2],
-    [1, 2, 2, 2, 2, 2],
-    [2, 2, 2, 2, 2, 2],
-    [2, 2, 2, 2, 2, 2],
-];
-
-var Res = Estrella.getCoordenadasObjetivo(Matriz);
-var Inicio = Res.Inicio;
-var Final = Res.Final;
-
-var MatrizModificada = Estrella.AsignarCostos(Matriz, Final);
-
+app.use(cors())
 app.get('/api/matriz', (req, res) => {
-    res.send(Estrella.verVecinos(MatrizModificada, Inicio.i, Inicio.j));
+    let Matriz = [
+        [2, 2, 2, 2, 2, 2],
+        [2, 2, 2, 2, 1, 2],
+        [2, 2, 2, 2, 2, 2],
+        [1, 2, 2, 2, 2, 2],
+        [2, 2, 2, 2, 2, 2],
+        [2, 2, 2, 2, 2, 2],
+    ];
+
+    let Res = Estrella.getCoordenadasObjetivo(Matriz);
+    let Inicio = { i: 2, j: 2 };
+    let Final = { i: 1, j: 5 };
+
+    let MatrizModificada = Estrella.AsignarCostos(Matriz, Inicio, Final);
+    console.log(Estrella.verVecinos(MatrizModificada, Inicio, Final))
+    res.send(MatrizModificada)
+    // console.log(Matriz)
+    // res.send(Estrella.verVecinos(MatrizModificada, Inicio, Final));
 });
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname + '/app.html'));
 })
 
-app.listen(3000, () => console.log("Running..."))
+app.listen(3001, () => console.log("Running..."))
 
 // setTimeout(() => {
 //     // Estrella.dibujarMatriz(MatrizModificada);

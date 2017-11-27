@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
-import  Matriz  from './components/matriz/matriz.js'
+import Matriz from './components/matriz/matriz.js'
+import axios from 'axios'
 
 // var Matrix = [
 //   [2, 2, 2, 2, 2, 2],
@@ -13,26 +14,37 @@ import  Matriz  from './components/matriz/matriz.js'
 // ];
 
 var matrix2 = [
-[{visitado : false, gn : 2}, {visitado : false, gn : 2},{visitado : false, gn : 2}, {visitado : false, gn : 2}, {visitado : false, gn : 2}, {visitado : false, gn : 2}],
-[{visitado : false, gn : 2}, {visitado : false, gn : 2},{visitado : false, gn : 2}, {visitado : false, gn : 2}, {visitado : false, gn : -1, fin : true}, {visitado : false, gn : 2}],
-[{visitado : false, gn : 2}, {visitado : false, gn : 2},{visitado : false, gn : 2}, {visitado : false, gn : 2}, {visitado : false, gn : 2}, {visitado : false, gn : 2, final : true}],
-[{visitado : false, gn : 1}, {visitado : false, gn : 2, inicio : true},{visitado : true, gn : 2}, {visitado : false, gn : 2}, {visitado : false, gn : 2}, {visitado : true, gn : 2}],
-[{visitado : false, gn : 2}, {visitado : false, gn : 2},{visitado : false, gn : 2}, {visitado : true, gn : 2}, {visitado : true, gn : 2}, {visitado : false, gn : 2}],
-[{visitado : false, gn : 2}, {visitado : false, gn : 2},{visitado : false, gn : 2}, {visitado : false, gn : 2}, {visitado : false, gn : 2}, {visitado : false, gn : 2}],
+  [{ Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }],
+  [{ Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: -1 }, { Visitado: false, gn: 2 }],
+  [{ Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2, Final: true }],
+  [{ Visitado: false, gn: 1 }, { Visitado: false, gn: 2, Inicio: true }, { Visitado: true, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: true, gn: 2 }],
+  [{ Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: true, gn: 2 }, { Visitado: true, gn: 2 }, { Visitado: false, gn: 2 }],
+  [{ Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }],
 ];
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      mat: [[]]
+    }
+  }
+
+  componentDidMount() {
+    axios.get(`http://localhost:3001/api/matriz`)
+    .then(res => {
+      const mat = res.data;
+      console.log(mat)
+      this.setState({ mat });
+    });
+
+  }
+
   render() {
     return (
       <div className="App">
-        {/* <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p> */}
-        <Matriz matriz={matrix2}/>
+        <Matriz matriz={this.state.mat} />
       </div>
     );
   }
