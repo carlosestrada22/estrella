@@ -71,41 +71,24 @@ const Algoritmo = (Matriz, inicio, fin) => {
                     || Matriz[renglon][columna].Inicio || !!Matriz[renglon][columna].Visitado
                 ) continue;
 
-                if (Matriz[renglon][columna].Final) {
-                    bandera = false
-                }
+                Matriz[renglon][columna].Final ? bandera = false : ""                
 
                 Frontera.push(Matriz[renglon][columna])
             }
         }
         Ordenar(Frontera)
-        // console.log(Frontera)
+
         let expandido = Frontera.shift()
         bandera ? expandido.Visitado = true : ""
         Acumulador += expandido.Costo
-        // console.log(expandido)
         Expandidos.push(expandido)
-
-        // console.log("***",Frontera, "***")
-        // console.log("++++", Expandidos, "++++")
+        
         bandera ? VerVecinos(Expandidos[Expandidos.length - 1].i, Expandidos[Expandidos.length - 1].j) : ""
-        // if ((Frontera.length > 0 && CostoTotal(Frontera[0]) > Aux) || Frontera.length === 0) {
-        //     Frontera.shift(Aux)
-        //     Aux.Visitado = true
-        // }
-
-        // Expandidos.push(Frontera.length > 0 ? Frontera.unshift() : Aux)
-
-        // console.log("****" + Expandidos)
-        // if(Aux.Final)
-        // !Expandidos[Expandidos.length - 1].Final ? VerVecinos(Expandidos[Expandidos.length - 1].i, Expandidos[Expandidos.length - 1].j) : ""
     }
-    // Expandidos.push(Frontera.shift());
     VerVecinos(inicio.i, inicio.j)
 
     return Matriz
 }
-
 
 const Ordenar = lista => {
     lista.sort((a, b) => {
@@ -119,7 +102,6 @@ const Ordenar = lista => {
         return 0;
     })
 }
-
 
 module.exports.verVecinos = Algoritmo
 
