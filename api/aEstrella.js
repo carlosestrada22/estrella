@@ -43,6 +43,71 @@ exports.getCoordenadasObjetivo = (Matriz) => {
     return result;
 };
 
+const Algoritmo = Matriz => {
+    let Frontera = new Array()
+    let Expandidos = new Array()
+    let Chidos = new Array()
+    let newMatriz = []
+
+    const CostoTotal = nodo => nodo.gn + nodo.hn
+
+    const VerVecinos = (i, j) => {
+        let contador = 0
+        let Acumulador = 0
+        let bandera = true
+        let Aux = {}
+
+        for (let renglon = (i < 1 ? 1 : i) - 1; renglon < i + 2; renglon++) {
+            for (let columna = (j < 1 ? 1 : j) - 1; columna < j + 2; columna++) {
+                if (columna == j && renglon == i || columna >= Matriz.length || renglon >= Matriz.length
+                    // Esto era para saber si era el nodo inicio o si era uno intransitable
+                    // || Matriz[renglon][columna].Valor == 1 || Matriz[renglon][columna].Valor == 0
+                    || !!Matriz[renglon][columna].final
+                ) continue;
+
+                if (Matriz[renglon][columna].Valor.final) {
+                    return Matriz[renglon][columna];
+                }
+                // if (bandera) {
+                //     Acumulador = Matriz[renglon][columna].Valor + 1;
+                //     bandera = false;
+                // }
+                //Matriz[renglon][columna].Visitado = false;
+                // if (!Chidos.find(x => x.i == renglon && x.j == columna)) {
+                //     Frontera.push(Matriz[renglon][columna]);
+                // }
+                // contador++;
+            }
+            if (CostoTotal(Matriz[renglon][columna]) < CostoTotal(Aux)) {
+                Aux = Matriz[renglon][columna]
+            }
+
+            // Matriz[renglon][columna].Visitado = CostoTotal(Matriz[renglon][columna]) < CostoTotal(Frontera[0]) ? true : false
+        }
+    }
+    
+
+    Frontera.sort((a, b) => {
+        if (CostoTotal(a) > CostoTotal(b)) {
+            return 1;
+        }
+        if (CostoTotal(a) < CostoTotal(b)) {
+            return -1;
+        }
+        // a must be equal to b
+        return 0;
+    });
+
+    if(Frontera.length > 0 && CostoTotal(Frontera[0]) > Aux ){
+        Frontera.shift(Aux)
+        Aux.Visitado = true
+    }
+
+    Expandidos.push(Frontera.shift());
+
+
+}
+
 let Frontera = new Array();
 let Expandidos = new Array();
 let Chidos = new Array();
@@ -119,8 +184,8 @@ const objectsAreSame = (x, y) => {
 }
 const ListContainsObject = (a, b) => {
     let result;
-    b.forEach(val =>{
+    b.forEach(val => {
         result = objectsAreSame(a, val) ? a : ""
     });
-    return result !== "" ? result : {} ;
+    return result !== "" ? result : {};
 }
