@@ -103,7 +103,6 @@ const Ordenar = lista => {
         if (a.Costo < b.Costo) {
             return -1;
         }
-        // a must be equal to b
         return 0;
     })
 }
