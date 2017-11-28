@@ -14,11 +14,12 @@
 
  .celda-matriz {
     padding: 0;
+    opacity: .4;
     min-height: 85px;
     min-width: 100px;
     /* max-width: 150px;
     max-height: 85px; */
-    background: green;
+    /* background: green; */
     border: 1px solid #fefefe;
     border-radius: 0;
     text-align: center;
@@ -37,11 +38,13 @@
 }
 
  .Inicio {
-     background: blue;
+     background: blue !important;
+     opacity: 1;
  }
  
  .Final {
-     background: red;
+     background: red !important;
+     opacity: 1;
  }
  .node-data{
      width: 100%;
@@ -66,18 +69,23 @@
  }
 
  .btn-controlador{
-    border-radius: 50% !important;
     margin: 0 5px;
     color: #fefefe;
-    background: #0e0e0e;
-    position: sticky;
     z-index: 4;
     border-style: none;
+    
  }
+ .botones-inicio-fin{
+    display: flex;
+    position: relative;
+}
 .btn-inicio{
     float: left;
 }
 
  .btn-final{
     float: right;
+ }
+ .no-opaco{
+     opacity: 1;
  }

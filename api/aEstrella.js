@@ -1,5 +1,5 @@
 
-exports.AsignarCostos = (Matriz, Inicio, Final) => {
+exports.AsignarCostos = (Matriz, Inicio, Final, Tipo = 1) => {
     let fin = Final;
     let nuevaMatriz = [[]];
     let id = 1
@@ -10,11 +10,13 @@ exports.AsignarCostos = (Matriz, Inicio, Final) => {
             let nuevoElemento = {
                 hn: Math.abs(fin.i - i) + Math.abs(fin.j - j),
                 Valor: Matriz[i][j],
-                gn: Matriz[i][j],
+                // gn: Matriz[i][j],
                 i: i,
                 j: j,
                 Id: id++
             };
+            nuevoElemento.gn = getGn(Tipo, Matriz[i][j])
+            nuevoElemento.Color = getColor(Matriz[i][j])
             nuevoElemento.Costo = nuevoElemento.gn + nuevoElemento.hn
             nuevaMatriz[i][j] = (nuevoElemento);
         }, this);
@@ -69,7 +71,7 @@ const Algoritmo = (Matriz, inicio, fin) => {
                     || Matriz[renglon][columna].Inicio || !!Matriz[renglon][columna].Visitado
                 ) continue;
 
-                if (Matriz[renglon][columna].Final){
+                if (Matriz[renglon][columna].Final) {
                     bandera = false
                     Aux = Matriz[renglon][columna]
                 }
@@ -81,8 +83,9 @@ const Algoritmo = (Matriz, inicio, fin) => {
 
         let expandido = Frontera.shift()
         bandera ? expandido.Visitado = true : ""
+        bandera ? expandido.Color = "yellow" : expandido.Color
         Acumulador += expandido.Costo
-        bandera ? Expandidos.push( expandido ) : Expandidos.push(Aux)
+        bandera ? Expandidos.push(expandido) : Expandidos.push(Aux)
 
         bandera ? VerVecinos(Expandidos[Expandidos.length - 1].i, Expandidos[Expandidos.length - 1].j) : ""
     }
@@ -95,7 +98,77 @@ const Algoritmo = (Matriz, inicio, fin) => {
         Acumulador: Acumulador
     }
 }
+const getGn = (id, tipo) => {
+    let res = 0
+    if (tipo === 1) {
+        switch (id) {
+            case 1:
+                res = 2
+                break;
+            case 2:
+                res = 5
+                break;
+            case 3:
+                res = 1
+                break;
+            case 4:
+                res = 1
+                break;
+            case 5:
+                res = 1
+                break;
+            default:
+                res = 6
+                break;
+        }
+    }
+    if (tipo === 2) {
+        switch (id) {
+            case 1:
+                res = 3
+                break;
+            case 2:
+                res = 1
+                break;
+            case 3:
+                res = 1
+                break;
+            case 4:
+                res = 2
+                break;
+            case 5:
+                res = 5
+                break;
+            default:
+                res = 6
+                break;
+        }
+    }
+    return res
+}
 
+const getColor = id => {
+    switch (id) {
+        case 1:
+            return 'grey'
+            break;
+        case 2:
+            return 'blue'
+            break;
+        case 3:
+            return 'brown'
+            break;
+        case 4:
+            return 'green'
+            break;
+        case 5:
+            return 'red'
+            break;
+        default:
+            return 'white'
+            break;
+    }
+}
 const Ordenar = lista => {
     lista.sort((a, b) => {
         if (a.Costo == b.Costo && a.hn > b.hn) return 1

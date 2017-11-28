@@ -72,6 +72,10 @@ class App extends Component {
     this.cargarMatriz(this.state.info.Matriz, this.state.Inicio, this.state.Final)
   }
 
+  isIniciofin = () =>{
+    return this.state.Inicio && this.state.Final
+  }
+
   render() {
     return (
       <div className="App">

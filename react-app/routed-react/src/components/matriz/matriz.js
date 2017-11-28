@@ -32,7 +32,7 @@ class Matriz extends Component {
                 let newCell =
                     <td key={cellID}
                         id={cellID}
-                        className={`celda-matriz ${getClassName(this.props.info.Matriz[i][idx])}`}>
+                        className={`celda-matriz ${this.props.info.Matriz[i][idx].Color} ${getClassName(this.props.info.Matriz[i][idx])} `}>
                         <Celda nodo={this.props.info.Matriz[i][idx]} setInicio={this.props.setInicio} setFinal={this.props.setFinal} />
 
                     </td>
@@ -57,16 +57,16 @@ class Matriz extends Component {
 
 const BotonInicio = ({ handleClick, Inicio }) => {
     return (
-        <button id="btn-inicio" className="btn-controlador btn-inicio" onClick={() => handleClick(Inicio)}>
-            S
+        <button id="btn-inicio" className="waves-effect waves-light btn btn-controlador btn-inicio" onClick={() => handleClick(Inicio)}>
+            Inicio
         </button>
     )
 }
 
 const BotonFinal = ({ handleClick, Final }) => {
     return (
-        <button id="btn-final" className="btn-controlador btn-final" onClick={() => handleClick(Final)}>
-            F
+        <button id="btn-final" className="waves-effect waves-light btn btn-controlador btn-final" onClick={() => handleClick(Final)}>
+            Final
         </button>
     )
 }
@@ -74,7 +74,7 @@ const BotonFinal = ({ handleClick, Final }) => {
 const Celda = ({ nodo, setInicio, setFinal }) => {
     return (
         <div>
-            <div id="botones">
+            <div id="botones" className="botones-inicio-fin">
                 <BotonInicio handleClick={setInicio} Inicio={nodo}/>
                 <BotonFinal handleClick={setFinal} Final={nodo} />
             </div>
@@ -133,10 +133,10 @@ const NodoInterno = props => {
 }
 
 const getClassName = nodo => {
-    let className = nodo.Visitado ? "yellow " : ""
+    let className = nodo.Visitado ? "no-opaco " : ""
     className += nodo.Inicio ? "Inicio " : ""
     className += nodo.Final ? "Final " : ""
-    className += className === "" ? "green " : ""
+    // className += className === "" ? "green " : ""
     return className
 };
 
