@@ -23,7 +23,7 @@ class Matriz extends Component {
             let rowID = `row${i}`
             let cell = []
             for (var idx = 0; idx < this.props.info.Matriz[i].length; idx++) {
-                let cellID = `cell-${this.props.info.Matriz[i][idx].Id}`// `cell-${i}-${idx}`
+                let cellID = `cell-${this.props.info.Matriz[i][idx].Id}`
                 let newCell =
                     <td key={cellID}
                         id={cellID}
