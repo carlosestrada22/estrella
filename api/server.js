@@ -40,11 +40,25 @@ app.post('/api/matriz', (req, res) => {
     let Matriz = req.body.Matriz
     let rInicio = req.body.Inicio
     let rFinal = req.body.Final
-
     let Inicio = rInicio ? rInicio : Estrella.getRandomTargets(MatrixSize)
     let Final = rFinal ? rFinal : Estrella.getRandomTargets(MatrixSize)
 
+    if(rInicio || rFinal){
+        let nuevaMatriz = []
+        Matriz.forEach((element) => {
+            let nuevoRow = []
+            element.forEach( subElement => {
+                nuevoRow.push(subElement.gn)
+            }, this)
+            nuevaMatriz.push(nuevoRow)
+        }, this);
+        Matriz = nuevaMatriz
+        console.log(Matriz)
+    }
+    console.log(Matriz)
+
     let MatrizModificada = Estrella.AsignarCostos(Matriz, Inicio, Final);
+    console.log(MatrizModificada)
     res.send(Estrella.verVecinos(MatrizModificada, Inicio, Final))
 })
 
@@ -53,16 +67,3 @@ app.get('/', (req, res) => {
 })
 
 app.listen(3001, () => console.log("Running..."))
-
-// setTimeout(() => {
-//     // Estrella.dibujarMatriz(MatrizModificada);
-//     let result = Estrella.verVecinos(MatrizModificada, Inicio.i, Inicio.j);
-//     console.log(result);
-//     // console.log(Frontera);
-//     // Chidos.forEach(function(element) {
-//     //     let timpx = document.getElementById("Elemento_" + element.i + "-" + element.j);
-//     //     timpx.style.backgroundColor = "yellow";
-//     // }, this);
-// }, 200);
-
-// console.log(MatrizModificada);

@@ -60,7 +60,6 @@ const Algoritmo = (Matriz, inicio, fin) => {
     let Acumulador = 0
 
     const VerVecinos = (i, j) => {
-
         let Aux = {}
         console.log(++contador)
         for (let renglon = (i < 1 ? 1 : i) - 1; renglon < i + 2; renglon++) {
@@ -74,7 +73,6 @@ const Algoritmo = (Matriz, inicio, fin) => {
                     bandera = false
                     Aux = Matriz[renglon][columna]
                 }
-                  
 
                 Frontera.push(Matriz[renglon][columna])
             }

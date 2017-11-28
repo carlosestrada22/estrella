@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import '../../../node_modules/materialize-css/dist/css/materialize.css'
 import './matriz.css'
 import $ from 'jquery'
-class Matriz extends Component {
 
+class Matriz extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -12,10 +12,15 @@ class Matriz extends Component {
                 Expandidos: [],
                 Frontera: [],
                 Acumulador: 0
-            }
+            },
+        
         }
     }
+    // setInicio = Inicio => {
+    //     this.setState({ Inicio },() => console.log(this.state.Inicio))
+    // }
 
+    // setFinal = Final => this.setState({ Final })
 
     render() {
         let rows = [];
@@ -28,33 +33,57 @@ class Matriz extends Component {
                     <td key={cellID}
                         id={cellID}
                         className={`celda-matriz ${getClassName(this.props.info.Matriz[i][idx])}`}>
-                        <Celda nodo={this.props.info.Matriz[i][idx]} />
+                        <Celda nodo={this.props.info.Matriz[i][idx]} setInicio={this.props.setInicio} setFinal={this.props.setFinal} />
+
                     </td>
                 cell.push(newCell)
             }
             rows.push(<tr key={i} id={rowID}>{cell}</tr>)
         }
         return (
-            <div className="caja-principal">
+            <div className="row">
                 <BarraEstatica info={this.props.info} />
                 <table id="matriz" className="matriz">
                     <tbody>
                         {rows}
                     </tbody>
                 </table>
+                {/* <span>{this.state.Inicio.i}</span> */}
             </div>
         )
     }
 
 }
 
-const Celda = props => {
+const BotonInicio = ({ handleClick, Inicio }) => {
+    return (
+        <button id="btn-inicio" className="btn-controlador btn-inicio" onClick={() => handleClick(Inicio)}>
+            S
+        </button>
+    )
+}
+
+const BotonFinal = ({ handleClick, Final }) => {
+    return (
+        <button id="btn-final" className="btn-controlador btn-final" onClick={() => handleClick(Final)}>
+            F
+        </button>
+    )
+}
+
+const Celda = ({ nodo, setInicio, setFinal }) => {
     return (
         <div>
-            <span className="node-data">Id: {props.nodo.Id}</span>
-            <span className="node-data">G(n): {props.nodo.gn}</span>
-            <span className="node-data">H(n): {props.nodo.hn}</span>
-            <strong className="node-data">Costo total: {props.nodo.Costo}</strong>
+            <div id="botones">
+                <BotonInicio handleClick={setInicio} Inicio={nodo}/>
+                <BotonFinal handleClick={setFinal} Final={nodo} />
+            </div>
+            <div id="informacion">
+                <span className="node-data">Id: {nodo.Id}</span>
+                <span className="node-data">G(n): {nodo.gn}</span>
+                <span className="node-data">H(n): {nodo.hn}</span>
+                <strong className="node-data">Costo total: {nodo.Costo}</strong>
+            </div>
         </div>
     )
 }
@@ -92,12 +121,12 @@ const CeldaBarra = props => {
 }
 
 const NodoInterno = props => {
-        return (
+    return (
         <td className="celda-informacion" onMouseEnter={() => Hover(props.text)} onMouseLeave={() => unHover(props.text)}>
             <a href={`#cell-${props.text}`}>
-            {
-                props.text
-            }
+                {
+                    props.text
+                }
             </a>
         </td>
     )
@@ -116,6 +145,5 @@ const Hover = id => getNodo(id) ? getNodo(id).classList.add("hover") : ""
 const unHover = id => getNodo(id) ? getNodo(id).classList.remove("hover") : ""
 
 const getNodo = id => document.querySelector(`#cell-${id}`)
-
 
 export default Matriz;
