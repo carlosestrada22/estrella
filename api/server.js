@@ -40,6 +40,7 @@ app.post('/api/matriz', (req, res) => {
     let Matriz = req.body.Matriz
     let rInicio = req.body.Inicio
     let rFinal = req.body.Final
+    let Personaje = req.body.Personaje
     let Inicio = rInicio ? rInicio : Estrella.getRandomTargets(MatrixSize)
     let Final = rFinal ? rFinal : Estrella.getRandomTargets(MatrixSize)
 
@@ -57,7 +58,7 @@ app.post('/api/matriz', (req, res) => {
     }
     console.log(Matriz)
 
-    let MatrizModificada = Estrella.AsignarCostos(Matriz, Inicio, Final);
+    let MatrizModificada = Estrella.AsignarCostos(Matriz, Inicio, Final, Personaje);
     console.log(MatrizModificada)
     res.send(Estrella.verVecinos(MatrizModificada, Inicio, Final))
 })

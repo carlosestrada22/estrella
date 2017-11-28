@@ -82,6 +82,7 @@ const Celda = ({ nodo, setInicio, setFinal }) => {
                 <span className="node-data">Id: {nodo.Id}</span>
                 <span className="node-data">G(n): {nodo.gn}</span>
                 <span className="node-data">H(n): {nodo.hn}</span>
+                <span className="node-data">Terreno: {nodo.Terreno}</span>
                 <strong className="node-data">Costo total: {nodo.Costo}</strong>
             </div>
         </div>

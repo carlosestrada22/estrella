@@ -17,6 +17,7 @@ exports.AsignarCostos = (Matriz, Inicio, Final, Tipo = 1) => {
             };
             nuevoElemento.gn = getGn(Tipo, Matriz[i][j])
             nuevoElemento.Color = getColor(Matriz[i][j])
+            nuevoElemento.Terreno = getTerreno(Matriz[i][j])
             nuevoElemento.Costo = nuevoElemento.gn + nuevoElemento.hn
             nuevaMatriz[i][j] = (nuevoElemento);
         }, this);
@@ -146,7 +147,28 @@ const getGn = (id, tipo) => {
     }
     return res
 }
-
+const getTerreno = id => {
+    switch (id) {
+        case 1:
+            return 'Concreto'
+            break;
+        case 2:
+            return 'Agua'
+            break;
+        case 3:
+            return 'Tierra'
+            break;
+        case 4:
+            return 'Pasto'
+            break;
+        case 5:
+            return 'Lava'
+            break;
+        default:
+            return 'Inexplorado'
+            break;
+    }
+}
 const getColor = id => {
     switch (id) {
         case 1:

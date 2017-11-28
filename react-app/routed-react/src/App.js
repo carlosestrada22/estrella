@@ -17,7 +17,8 @@ class App extends Component {
         Acumulador: 0
       },
       Inicio: {},
-      Final: {}
+      Final: {},
+      Personaje: 1
     }
   }
   setInicio = Inicio => {
@@ -35,11 +36,12 @@ class App extends Component {
         this.setState({ info })
       });
   }
-  cargarMatriz(matrix, Inicio = null, Final = null ) {
+  cargarMatriz(matrix, Inicio = null, Final = null) {
     axios.post(`http://${window.location.hostname}:3001/api/matriz?size=${matrix.length}`, {
       Matriz: matrix,
       Inicio: Inicio,
-      Final: Final
+      Final: Final,
+      Personaje: this.state.Personaje
     })
       .then(res => {
         const info = res.data
@@ -47,6 +49,10 @@ class App extends Component {
       })
   }
 
+  setPersonaje = tipo => {
+    console.log(tipo)
+    this.setState({Personaje : tipo})
+  }
   loadFile(ev) {
     let reader = new FileReader();
     let row = []
@@ -72,7 +78,7 @@ class App extends Component {
     this.cargarMatriz(this.state.info.Matriz, this.state.Inicio, this.state.Final)
   }
 
-  isIniciofin = () =>{
+  isIniciofin = () => {
     return this.state.Inicio && this.state.Final
   }
 
@@ -89,7 +95,7 @@ class App extends Component {
             <label>Cargar archivo de texto:</label>
             <input type='file' accept='text/plain' onChange={event => this.loadFile(event.target)} className="waves-effect waves-light btn" />
           </div>
-          <div id="nodos-inicio-fin" className="cargador col s4">
+          <div id="nodos-inicio-fin" className="cargador col s3">
             <div className="col s6">
               <div className="row">
                 <div className="col s6"><label>Nodo inicio:  </label></div>
@@ -99,10 +105,18 @@ class App extends Component {
                 <div className="col s6"><label>Nodo Final:  </label></div>
                 <div className="col s6"><span>{`${this.state.Final.Id}`} </span></div>
               </div>
+              <div className="row">
+                <div className="col s6"><label>Personaje:  </label></div>
+                <div className="col s6"><span>{`${this.state.Personaje}`} </span></div>
+              </div>
             </div>
             <div className="col s6">
               <button id="cargar-inicio-fin" onClick={() => this.ConInicioFin()} className="waves-effect waves-light btn" >Cargar inicio y fin</button>
             </div>
+          </div>
+          <div className="col s1">
+            <button id="tipo-personaje" onClick={() => this.setPersonaje(1)} className="waves-effect waves-light btn blue" >Dino</button>
+            <button id="tipo-personaje" onClick={() => this.setPersonaje(2)} className="waves-effect waves-light btn red" >Pato</button>
           </div>
         </div>
         <div className="row">
