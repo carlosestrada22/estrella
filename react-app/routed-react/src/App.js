@@ -99,7 +99,10 @@ class App extends Component {
               </div>
               <div className="row">
                 <div className="col s6"><label>Personaje:  </label></div>
-                <div className="col s6"><span>{`${this.state.Personaje == 1 ? "Tiranosaurio" : "Pato"}`} </span></div>
+                <div className="col s6" >
+                  <img src={`http://localhost:3001/${this.state.Personaje == 1 ? "dino" : "duck"}`}  height="100px" width="100px" />
+                </div>
+                {/* <div className="col s6"><span>{`${this.state.Personaje == 1 ? "Tiranosaurio" : "Pato"}`} </span></div> */}
               </div>
             </div>
             <div className="col s6">

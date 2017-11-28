@@ -95,3 +95,20 @@
  .chip{
      display: unset;
  }
+ .marcada-1{
+     border: #c900a7 dashed;
+ }
+ .marcada-2{
+     border: #3c008f dashed;
+ }
+
+ #informacion {
+    text-align: left;
+    padding: 10px;
+}
+.amarillo{
+    background: #fff494 ;
+}
+.dino{
+    border-radius: 50;
+}

@@ -84,7 +84,7 @@ const Algoritmo = (Matriz, inicio, fin) => {
 
         let expandido = Frontera.shift()
         bandera ? expandido.Visitado = true : ""
-        bandera ? expandido.Color = "yellow" : expandido.Color
+        bandera ? expandido.Color = "amarillo" : expandido.Color
         Acumulador += expandido.Costo
         bandera ? Expandidos.push(expandido) : Expandidos.push(Aux)
 

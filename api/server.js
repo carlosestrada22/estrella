@@ -69,4 +69,10 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname + '/app.html'));
 })
 
+app.get('/dino', (req, res) => {
+    res.sendFile(path.join(__dirname + '/dino.svg'));
+})
+app.get('/duck', (req, res) => {
+    res.sendFile(path.join(__dirname + '/duck.svg'));
+})
 app.listen(3001, () => console.log("Running..."))

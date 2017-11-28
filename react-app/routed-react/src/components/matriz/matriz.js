@@ -55,17 +55,17 @@ class Matriz extends Component {
 
 }
 
-const BotonInicio = ({ handleClick, Inicio }) => {
+const BotonInicio = ({ handleClick, Inicio, marcar }) => {
     return (
-        <button id="btn-inicio" className="waves-effect waves-light btn btn-controlador btn-inicio" onClick={() => handleClick(Inicio)}>
+        <button id="btn-inicio" className="waves-effect waves-light btn btn-controlador btn-inicio" onClick={() => { handleClick(Inicio); marcar(1) }}>
             Inicio
         </button>
     )
 }
 
-const BotonFinal = ({ handleClick, Final }) => {
+const BotonFinal = ({ handleClick, Final, marcar }) => {
     return (
-        <button id="btn-final" className="waves-effect waves-light btn btn-controlador btn-final" onClick={() => handleClick(Final)}>
+        <button id="btn-final" className="waves-effect waves-light btn btn-controlador btn-final" onClick={() => { handleClick(Final); marcar(2) }}>
             Final
         </button>
     )
@@ -74,22 +74,38 @@ const BotonFinal = ({ handleClick, Final }) => {
 const Celda = ({ nodo, setInicio, setFinal }) => {
     const esInicio = nodo => !!nodo.Inicio
     const esFinal = nodo => !!nodo.Final
-
+    let marcar = false
+    const marcarCelda = estado => {
+        let prev = document.querySelectorAll(`.marcada-${estado}`)
+        if (prev) {
+            for (let i = 0; i < prev.length; i++) {
+                prev[i].classList.remove(`marcada-${estado}`)
+            }
+        }
+        document.querySelector(`#celda-${nodo.Id}`).classList.add(`marcada-${estado}`)
+    }
     return (
-        <div>
-            <div id="botones" className="botones-inicio-fin">
-                <BotonInicio handleClick={setInicio} Inicio={nodo} />
-                <BotonFinal handleClick={setFinal} Final={nodo} />
+        <div id={`celda-${nodo.Id}`}  >
+            <div className="row">
+                <div id="botones" className="botones-inicio-fin">
+                    <BotonInicio handleClick={setInicio} Inicio={nodo} marcar={marcarCelda} />
+                    <BotonFinal handleClick={setFinal} Final={nodo} marcar={marcarCelda} />
+                </div>
+                <div className={`chip ${esInicio(nodo) ? "" : "hide"}`}  >Inicio</div>
+                <div className={`chip ${esFinal(nodo) ? "" : "hide"}`}  >Final</div>
             </div>
-            <div className={`chip ${esInicio(nodo) ? "" : "hide"}`}  >Inicio</div>
-            <div className={`chip ${esFinal(nodo) ? "" : "hide"}`}  >Final</div>
-            <div id="informacion">
-                <span className="node-data">Id: {nodo.Id}</span>
-                <span className="node-data">G(n): {nodo.gn}</span>
-                <span className="node-data">H(n): {nodo.hn}</span>
-                <span className="node-data">Terreno: {nodo.Terreno}</span>
-                <strong className="node-data">Costo total: {nodo.Costo}</strong>
+            <div className="row">
+                <div className="col s12">
+                    <div id="informacion" className="card">
+                        <span className="node-data">Id: {nodo.Id}</span>
+                        <span className="node-data">G(n): {nodo.gn}</span>
+                        <span className="node-data">H(n): {nodo.hn}</span>
+                        <span className="node-data">Terreno: {nodo.Terreno}</span>
+                        <strong className="node-data">Costo total: {nodo.Costo}</strong>
+                    </div>
+                </div>
             </div>
+
         </div>
     )
 }
