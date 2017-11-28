@@ -37,7 +37,7 @@ class Matriz extends Component {
         return (
             <div className="caja-principal">
                 <BarraEstatica info={this.props.info} />
-                <table id="matriz">
+                <table id="matriz" className="matriz">
                     <tbody>
                         {rows}
                     </tbody>
@@ -92,11 +92,13 @@ const CeldaBarra = props => {
 }
 
 const NodoInterno = props => {
-    return (
+        return (
         <td className="celda-informacion" onMouseEnter={() => Hover(props.text)} onMouseLeave={() => unHover(props.text)}>
+            <a href={`#cell-${props.text}`}>
             {
                 props.text
             }
+            </a>
         </td>
     )
 }

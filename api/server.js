@@ -5,13 +5,15 @@ const bodyParser = require('body-parser')
 const path = require('path');
 const cors = require('cors')
 
-bodyParser.json();
+app.use(bodyParser.json());
 
 app.use(cors())
+
+
 app.get('/api/matriz', (req, res) => {
 
     let isRandom = req.query.random == 1 ? true : false
-    let MatrixSize =  req.query.size ?  req.query.size : 6
+    let MatrixSize = req.query.size ? req.query.size : 6
     console.log(req.query)
     console.log(isRandom)
     let Matriz = isRandom ? Estrella.RandomMatrix(MatrixSize, 1, 5) : [
@@ -23,16 +25,28 @@ app.get('/api/matriz', (req, res) => {
         [2, 2, 2, 2, 2, 2],
     ];
 
-    console.log(Matriz)
     let Res = Estrella.getCoordenadasObjetivo(Matriz);
     let Inicio = isRandom ? Estrella.getRandomTargets(MatrixSize) : { i: 2, j: 2 };
     let Final = isRandom ? Estrella.getRandomTargets(MatrixSize) : { i: 1, j: 5 };
 
-    console.log(Inicio, Final)
 
     let MatrizModificada = Estrella.AsignarCostos(Matriz, Inicio, Final);
     res.send(Estrella.verVecinos(MatrizModificada, Inicio, Final))
 });
+
+app.post('/api/matriz', (req, res) => {
+
+    let MatrixSize = req.query.size
+    let Matriz = req.body.Matriz
+    let rInicio = req.body.Inicio
+    let rFinal = req.body.Final
+
+    let Inicio = rInicio ? rInicio : Estrella.getRandomTargets(MatrixSize)
+    let Final = rFinal ? rFinal : Estrella.getRandomTargets(MatrixSize)
+
+    let MatrizModificada = Estrella.AsignarCostos(Matriz, Inicio, Final);
+    res.send(Estrella.verVecinos(MatrizModificada, Inicio, Final))
+})
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname + '/app.html'));

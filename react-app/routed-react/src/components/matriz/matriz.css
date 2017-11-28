@@ -2,6 +2,7 @@
     margin: 0;
     width: 90% !important;
 }
+
 .matriz, th {
     border: 1px solid black;
     /* width: -webkit-fill-available;
@@ -52,7 +53,7 @@
      background: black;
      width: 100%;
      height: 100px;
-     position: sticky;
+     position: fixed;
  }
  
  .celda-informacion, .texto-infobar{
