@@ -85,25 +85,13 @@ const BarraEstatica = props => {
 
 const CeldaBarra = props => {
     return (
-        <div>
-            {
-                props.info.map(nodo =>
-                    <NodoInterno text={nodo.Id} />
-                )
-            }
-        </div>
+        props.info.map(nodo =>
+            <NodoInterno text={nodo.Id} />
+        )
     )
 }
 
 const NodoInterno = props => {
-
-    let tableNode =
-        <td className="celda-informacion">
-            {
-                props.text
-            }
-        </td>
-
     return (
         <td className="celda-informacion" onMouseEnter={() => Hover(props.text)} onMouseLeave={() => unHover(props.text)}>
             {
@@ -121,7 +109,7 @@ const getClassName = nodo => {
     return className
 };
 
-const Hover = id => getNodo(id) ? getNodo.classList.add("hover") : ""
+const Hover = id => getNodo(id) ? getNodo(id).classList.add("hover") : ""
 
 const unHover = id => getNodo(id) ? getNodo(id).classList.remove("hover") : ""
 
