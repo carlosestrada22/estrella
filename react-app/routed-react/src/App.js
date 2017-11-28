@@ -21,9 +21,7 @@ class App extends Component {
       Personaje: 1
     }
   }
-  setInicio = Inicio => {
-    this.setState({ Inicio }, () => console.log(this.state.Inicio))
-  }
+  setInicio = Inicio => this.setState({ Inicio })
 
   setFinal = Final => this.setState({ Final })
 
@@ -49,10 +47,8 @@ class App extends Component {
       })
   }
 
-  setPersonaje = tipo => {
-    console.log(tipo)
-    this.setState({Personaje : tipo})
-  }
+  setPersonaje = tipo => this.setState({ Personaje: tipo })
+
   loadFile(ev) {
     let reader = new FileReader();
     let row = []
@@ -74,13 +70,9 @@ class App extends Component {
 
   getSize = () => document.querySelector(`#matriz-size-input`).value
 
-  ConInicioFin = () => {
-    this.cargarMatriz(this.state.info.Matriz, this.state.Inicio, this.state.Final)
-  }
+  ConInicioFin = () => this.cargarMatriz(this.state.info.Matriz, this.state.Inicio, this.state.Final)
 
-  isIniciofin = () => {
-    return this.state.Inicio && this.state.Final
-  }
+  isIniciofin = () => this.state.Inicio && this.state.Final
 
   render() {
     return (
@@ -88,7 +80,7 @@ class App extends Component {
         <div className="control-panel row">
           <div id="generador" className="col s4">
             <input placeholder="Tamaño de la nueva matriz" id="matriz-size-input" type="number" className="validate" required />
-            <label>Genera una nueva matriz random(default tamaño: 6)</label>
+            <label>Genera una nueva matriz random(default tamaño: 6) </label>
             <button type="submit" action="" onClick={() => this.refresh(this.getSize())} className="waves-effect waves-light btn refresh-btn">Generar</button>
           </div>
           <div id="cargador" className="cargador  col s4">
@@ -107,7 +99,7 @@ class App extends Component {
               </div>
               <div className="row">
                 <div className="col s6"><label>Personaje:  </label></div>
-                <div className="col s6"><span>{`${this.state.Personaje}`} </span></div>
+                <div className="col s6"><span>{`${this.state.Personaje == 1 ? "Tiranosaurio" : "Pato"}`} </span></div>
               </div>
             </div>
             <div className="col s6">
@@ -115,8 +107,8 @@ class App extends Component {
             </div>
           </div>
           <div className="col s1">
-            <button id="tipo-personaje" onClick={() => this.setPersonaje(1)} className="waves-effect waves-light btn blue" >Dino</button>
-            <button id="tipo-personaje" onClick={() => this.setPersonaje(2)} className="waves-effect waves-light btn red" >Pato</button>
+            <button id="tipo-personaje" onClick={() => this.setPersonaje(1)} className="waves-effect waves-light btn red" >Dino</button>
+            <button id="tipo-personaje" onClick={() => this.setPersonaje(2)} className="waves-effect waves-light btn blue" >Pato</button>
           </div>
         </div>
         <div className="row">

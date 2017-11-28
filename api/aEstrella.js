@@ -64,7 +64,7 @@ const Algoritmo = (Matriz, inicio, fin) => {
 
     const VerVecinos = (i, j) => {
         let Aux = {}
-        console.log(++contador)
+        // console.log(++contador)
         for (let renglon = (i < 1 ? 1 : i) - 1; renglon < i + 2; renglon++) {
             for (let columna = (j < 1 ? 1 : j) - 1; columna < j + 2; columna++) {
 
@@ -99,9 +99,9 @@ const Algoritmo = (Matriz, inicio, fin) => {
         Acumulador: Acumulador
     }
 }
-const getGn = (id, tipo) => {
+const getGn = (tipo, id) => {
     let res = 0
-    if (tipo === 1) {
+    if (tipo == 1) {
         switch (id) {
             case 1:
                 res = 2
@@ -123,7 +123,7 @@ const getGn = (id, tipo) => {
                 break;
         }
     }
-    if (tipo === 2) {
+    if (tipo == 2) {
         switch (id) {
             case 1:
                 res = 3
@@ -145,6 +145,7 @@ const getGn = (id, tipo) => {
                 break;
         }
     }
+    // console.log(res)
     return res
 }
 const getTerreno = id => {

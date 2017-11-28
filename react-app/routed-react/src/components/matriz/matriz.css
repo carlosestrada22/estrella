@@ -40,10 +40,13 @@
  .Inicio {
      background: blue !important;
      opacity: 1;
- }
+     border: #0e0e0e solid;
+     transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
  
  .Final {
      background: red !important;
+     border: #0e0e0e solid;
      opacity: 1;
  }
  .node-data{
@@ -53,7 +56,7 @@
  }
 
  .barra-informacion{
-     background: black;
+     background: #444444;
      width: 100%;
      height: 100px;
      position: unset;
@@ -88,4 +91,7 @@
  }
  .no-opaco{
      opacity: 1;
+ }
+ .chip{
+     display: unset;
  }

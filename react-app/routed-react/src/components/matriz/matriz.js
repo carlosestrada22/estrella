@@ -13,7 +13,7 @@ class Matriz extends Component {
                 Frontera: [],
                 Acumulador: 0
             },
-        
+
         }
     }
     // setInicio = Inicio => {
@@ -72,12 +72,17 @@ const BotonFinal = ({ handleClick, Final }) => {
 }
 
 const Celda = ({ nodo, setInicio, setFinal }) => {
+    const esInicio = nodo => !!nodo.Inicio
+    const esFinal = nodo => !!nodo.Final
+
     return (
         <div>
             <div id="botones" className="botones-inicio-fin">
-                <BotonInicio handleClick={setInicio} Inicio={nodo}/>
+                <BotonInicio handleClick={setInicio} Inicio={nodo} />
                 <BotonFinal handleClick={setFinal} Final={nodo} />
             </div>
+            <div className={`chip ${esInicio(nodo) ? "" : "hide"}`}  >Inicio</div>
+            <div className={`chip ${esFinal(nodo) ? "" : "hide"}`}  >Final</div>
             <div id="informacion">
                 <span className="node-data">Id: {nodo.Id}</span>
                 <span className="node-data">G(n): {nodo.gn}</span>

@@ -14,9 +14,9 @@ app.get('/api/matriz', (req, res) => {
 
     let isRandom = req.query.random == 1 ? true : false
     let MatrixSize = req.query.size ? req.query.size : 6
-    console.log(req.query)
-    console.log(isRandom)
-    let Matriz = isRandom ? Estrella.RandomMatrix(MatrixSize, 1, 5) : [
+    // console.log(req.query)
+    // console.log(isRandom)
+    let Matriz = isRandom ? Estrella.RandomMatrix(MatrixSize, 1, 6) : [
         [2, 2, 2, 2, 2, 2],
         [2, 2, 2, 2, 1, 2],
         [2, 2, 2, 2, 2, 2],
@@ -44,22 +44,24 @@ app.post('/api/matriz', (req, res) => {
     let Inicio = rInicio ? rInicio : Estrella.getRandomTargets(MatrixSize)
     let Final = rFinal ? rFinal : Estrella.getRandomTargets(MatrixSize)
 
+    console.log(Matriz)
+
     if(rInicio || rFinal){
         let nuevaMatriz = []
         Matriz.forEach((element) => {
             let nuevoRow = []
             element.forEach( subElement => {
-                nuevoRow.push(subElement.gn)
+                nuevoRow.push(subElement.Valor ? subElement.Valor : subElement)
             }, this)
             nuevaMatriz.push(nuevoRow)
         }, this);
         Matriz = nuevaMatriz
-        console.log(Matriz)
+        // console.log(Matriz)
     }
-    console.log(Matriz)
+    // console.log(Matriz)
 
     let MatrizModificada = Estrella.AsignarCostos(Matriz, Inicio, Final, Personaje);
-    console.log(MatrizModificada)
+    // console.log(MatrizModificada)
     res.send(Estrella.verVecinos(MatrizModificada, Inicio, Final))
 })
 
