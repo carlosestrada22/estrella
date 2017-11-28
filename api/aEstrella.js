@@ -1,6 +1,5 @@
 
 exports.AsignarCostos = (Matriz, Inicio, Final) => {
-
     let fin = Final;
     let nuevaMatriz = [[]];
     let id = 1
@@ -62,7 +61,7 @@ const Algoritmo = (Matriz, inicio, fin) => {
 
     const VerVecinos = (i, j) => {
 
-        let Aux = []
+        let Aux = {}
         console.log(++contador)
         for (let renglon = (i < 1 ? 1 : i) - 1; renglon < i + 2; renglon++) {
             for (let columna = (j < 1 ? 1 : j) - 1; columna < j + 2; columna++) {
@@ -71,7 +70,11 @@ const Algoritmo = (Matriz, inicio, fin) => {
                     || Matriz[renglon][columna].Inicio || !!Matriz[renglon][columna].Visitado
                 ) continue;
 
-                Matriz[renglon][columna].Final ? bandera = false : ""                
+                if (Matriz[renglon][columna].Final){
+                    bandera = false
+                    Aux = Matriz[renglon][columna]
+                }
+                  
 
                 Frontera.push(Matriz[renglon][columna])
             }
@@ -81,31 +84,51 @@ const Algoritmo = (Matriz, inicio, fin) => {
         let expandido = Frontera.shift()
         bandera ? expandido.Visitado = true : ""
         Acumulador += expandido.Costo
-        Expandidos.push(expandido)
-        
+        bandera ? Expandidos.push( expandido ) : Expandidos.push(Aux)
+
         bandera ? VerVecinos(Expandidos[Expandidos.length - 1].i, Expandidos[Expandidos.length - 1].j) : ""
     }
     VerVecinos(inicio.i, inicio.j)
 
-    return{
+    return {
         Matriz: Matriz,
         Frontera: Frontera,
         Expandidos: Expandidos,
         Acumulador: Acumulador
-    } 
+    }
 }
 
 const Ordenar = lista => {
     lista.sort((a, b) => {
-        if (a.Costo > b.Costo) {
-            return 1;
-        }
-        if (a.Costo < b.Costo) {
-            return -1;
-        }
+        if (a.Costo == b.Costo && a.hn > b.hn) return 1
+        if (a.Costo == b.Costo && a.hn < b.hn) return -1
+        if (a.Costo > b.Costo) return 1;
+        if (a.Costo < b.Costo) return -1;
         return 0;
     })
 }
+const RandomArray = (size, min, max) => {
+    let Arreglo = []
 
+    for (let i = 0; i < size; i++) {
+        Arreglo.push(getRandomInt(min, max))
+    }
+    return Arreglo
+}
+const getRandomInt = (min, max) => {
+    return Math.floor(Math.random() * (max - min)) + min
+}
+const RandomMatrix = (size, min, max) => {
+    let Matrix = []
+
+    for (let i = 0; i < size; i++) {
+        Matrix.push(RandomArray(size, min, max))
+    }
+    return Matrix
+}
+const getRandomTargets = size => { return { i: getRandomInt(0, size), j: getRandomInt(0, size) } }
+
+module.exports.getRandomTargets = getRandomTargets
+module.exports.RandomMatrix = RandomMatrix
 module.exports.verVecinos = Algoritmo
 

@@ -9,7 +9,12 @@ bodyParser.json();
 
 app.use(cors())
 app.get('/api/matriz', (req, res) => {
-    let Matriz = [
+
+    let isRandom = req.query.random == 1 ? true : false
+    let MatrixSize =  req.query.size ?  req.query.size : 6
+    console.log(req.query)
+    console.log(isRandom)
+    let Matriz = isRandom ? Estrella.RandomMatrix(MatrixSize, 1, 5) : [
         [2, 2, 2, 2, 2, 2],
         [2, 2, 2, 2, 1, 2],
         [2, 2, 2, 2, 2, 2],
@@ -18,9 +23,12 @@ app.get('/api/matriz', (req, res) => {
         [2, 2, 2, 2, 2, 2],
     ];
 
+    console.log(Matriz)
     let Res = Estrella.getCoordenadasObjetivo(Matriz);
-    let Inicio = { i: 2, j: 2 };
-    let Final = { i: 1, j: 5 };
+    let Inicio = isRandom ? Estrella.getRandomTargets(MatrixSize) : { i: 2, j: 2 };
+    let Final = isRandom ? Estrella.getRandomTargets(MatrixSize) : { i: 1, j: 5 };
+
+    console.log(Inicio, Final)
 
     let MatrizModificada = Estrella.AsignarCostos(Matriz, Inicio, Final);
     res.send(Estrella.verVecinos(MatrizModificada, Inicio, Final))

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../../../node_modules/materialize-css/dist/css/materialize.css'
 import './matriz.css'
-
+import $ from 'jquery'
 class Matriz extends Component {
 
     constructor(props) {
@@ -15,39 +15,34 @@ class Matriz extends Component {
             }
         }
     }
+
+
     render() {
         let rows = [];
         for (var i = 0; i < this.props.info.Matriz.length; i++) {
             let rowID = `row${i}`
             let cell = []
             for (var idx = 0; idx < this.props.info.Matriz[i].length; idx++) {
-                let cellID = `cell-${i}-${idx}`
+                let cellID = `cell-${this.props.info.Matriz[i][idx].Id}`// `cell-${i}-${idx}`
                 let newCell =
                     <td key={cellID}
                         id={cellID}
-
                         className={`celda-matriz ${getClassName(this.props.info.Matriz[i][idx])}`}>
                         <Celda nodo={this.props.info.Matriz[i][idx]} />
-                        {/* {
-                            this.props.info.Matriz[i][idx].gn
-                        } */}
                     </td>
                 cell.push(newCell)
             }
             rows.push(<tr key={i} id={rowID}>{cell}</tr>)
         }
         return (
-            <div>
-                <div className="container">
-                    <BarraEstatica info={this.props.info} />
-                    <table id="matriz">
-                        <tbody>
-                            {rows}
-                        </tbody>
-                    </table>
-                </div>
+            <div className="caja-principal">
+                <BarraEstatica info={this.props.info} />
+                <table id="matriz">
+                    <tbody>
+                        {rows}
+                    </tbody>
+                </table>
             </div>
-
         )
     }
 
@@ -79,7 +74,7 @@ const BarraEstatica = props => {
                     </td>
                     <td>
                         <h6 className="texto-infobar">Costo total: </h6>
-                        <NodoInterno text={props.info.Acumulador} />
+                        <span className="texto-infobar">{props.info.Acumulador}</span>
                     </td>
                 </tr>
             </table>
@@ -101,9 +96,19 @@ const CeldaBarra = props => {
 }
 
 const NodoInterno = props => {
-    return (
+
+    let tableNode =
         <td className="celda-informacion">
-            {props.text}
+            {
+                props.text
+            }
+        </td>
+
+    return (
+        <td className="celda-informacion" onMouseEnter={() => Hover(props.text)} onMouseLeave={() => unHover(props.text)}>
+            {
+                props.text
+            }
         </td>
     )
 }
@@ -115,5 +120,12 @@ const getClassName = nodo => {
     className += className === "" ? "green " : ""
     return className
 };
+
+const Hover = id => getNodo(id) ? getNodo.classList.add("hover") : ""
+
+const unHover = id => getNodo(id) ? getNodo(id).classList.remove("hover") : ""
+
+const getNodo = id => document.querySelector(`#cell-${id}`)
+
 
 export default Matriz;

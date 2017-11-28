@@ -1,9 +1,13 @@
+.caja-principal{
+    margin: 0;
+    width: 90% !important;
+}
 .matriz, th {
     border: 1px solid black;
-    width: -webkit-fill-available;
-    height: -webkit-fill-available;
-    max-height: 718;
-    max-width: 882;
+    /* width: -webkit-fill-available;
+    height: -webkit-fill-available; */
+    /* max-height: 718;
+    max-width: 882; */
     margin: auto;
  }
 
@@ -11,8 +15,8 @@
     padding: 0;
     min-height: 85px;
     min-width: 100px;
-    max-width: 150px;
-    max-height: 85px;
+    /* max-width: 150px;
+    max-height: 85px; */
     background: green;
     border: 1px solid #fefefe;
     border-radius: 0;
@@ -21,8 +25,9 @@
     cursor: pointer;
  }
 
- .celda-matriz:hover{
+ .celda-matriz:hover, .hover{
     opacity: .65;
+    z-index: 10;
 }
 
 .celda-matriz:focus{
@@ -52,4 +57,9 @@
  
  .celda-informacion, .texto-infobar{
      color:#fefefe;
+ }
+ .celda-informacion:hover{
+     opacity: .3;
+     background: rgb(202, 202, 202);
+     cursor: pointer;
  }

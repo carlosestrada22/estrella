@@ -1,62 +1,55 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
 import './App.css';
 import Matriz from './components/matriz/matriz.js'
+import RefreshButton from './components/refresh-button/refresh-button.js'
 import axios from 'axios'
-
-// var Matrix = [
-//   [2, 2, 2, 2, 2, 2],
-//   [2, 2, 2, 2, -1, 2],
-//   [2, 2, 2, 2, 2, 2],
-//   [1, 2, 2, 2, 2, 2],
-//   [2, 2, 2, 2, 2, 2],
-//   [2, 2, 2, 2, 2, 2],
-// ];
-
-var matrix2 = [
-  [{ Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }],
-  [{ Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: -1 }, { Visitado: false, gn: 2 }],
-  [{ Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2, Final: true }],
-  [{ Visitado: false, gn: 1 }, { Visitado: false, gn: 2, Inicio: true }, { Visitado: true, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: true, gn: 2 }],
-  [{ Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: true, gn: 2 }, { Visitado: true, gn: 2 }, { Visitado: false, gn: 2 }],
-  [{ Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }, { Visitado: false, gn: 2 }],
-];
 
 class App extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      mat: [[]],
+      // mat: [[]],
       info: {
         Matriz: [[]],
         Expandidos: [],
         Frontera: [],
         Acumulador: 0
-    }
+      }
     }
   }
 
-  componentDidMount() {
-    axios.get(`http://localhost:3001/api/matriz`)
+  refresh(size) {
+    !size ? size = 6 : ""
+    axios.get(`http://localhost:3001/api/matriz?random=1&size=${size}`)
       .then(res => {
-        const mat = res.data.Matriz;
-        const info =
-          res.data
-          ;
-        console.log(res.data)
-        this.setState({ info });
+        const info = res.data
+        this.setState({ info })
       });
+  }
 
+  componentDidMount() {
+    this.refresh()
+  }
+
+  getSize() {
+    return document.querySelector(`#matriz-size-input`).value
   }
 
   render() {
     return (
       <div className="App">
+        <div className="control-panel">
+          <input placeholder="Tamaño de la nueva matriz" id="matriz-size-input" type="number" class="validate" required />
+          <label>Genera una nueva matriz random(default tamaño: 6)</label>
+          <button type="submit" action="" onClick={() => this.refresh(this.getSize())} className="waves-effect waves-light btn refresh-btn">Generar</button>
+        </div>
         <Matriz info={this.state.info} />
+
       </div>
     );
   }
 }
+
 
 export default App;
